@@ -6,7 +6,7 @@ const productSchema = new Schema({
     required: [true, 'Please provide a valid product name'],
     minlength: [3, 'Product name must be at least 3 characters long'],
     maxlength: [50, 'Product name must not exceed 50 characters'],
-    trim: true, // Ensures no unnecessary whitespace
+    trim: true, // Removes unnecessary whitespace
   },
   brand: {
     type: String,
@@ -19,7 +19,7 @@ const productSchema = new Schema({
     min: [0, 'Price must be a positive number'],
     validate: {
       validator: (value: number) => value < 1000000,
-      message: 'Price must not exceed 1,000,000',
+      message: 'Price must not bigger than 1,000,000',
     },
   },
   category: {
