@@ -19,7 +19,7 @@ const productSchema = new Schema({
     min: [0, 'Price must be a positive number'],
     validate: {
       validator: (value: number) => value < 1000000,
-      message: 'Price must not bigger than 1,000,000',
+      message: 'Price must not be bigger than 1,000,000',
     },
   },
   category: {
@@ -64,6 +64,7 @@ productSchema.index(
     unique: true,
   }
 )
+
 // Custom pre-save hook for additional checks (optional)
 productSchema.pre('save', function (next) {
   if (this.quantity === 0 && this.inStock === true) {
