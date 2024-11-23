@@ -76,3 +76,21 @@ This project is an Express-based application developed using TypeScript, integra
 
 - When an order is placed, reduce the quantity in the product model.
 - If the inventory quantity goes to zero, set `inStock` to `false`.
+
+## Prerequisites
+
+1. **Node.js** (Download from [Node.js Official Site](https://nodejs.org/))
+2. **MongoDB** (Ensure MongoDB is installed and running locally or use a cloud service like [MongoDB Atlas](https://www.mongodb.com/cloud/atlas))
+3. **npm** (Comes with Node.js installation)
+
+---
+
+## Setup Instructions
+
+### 1. Clone the Repository
+
+Clone the repository and navigate to the project directory:
+
+```bash
+git clone <repository-url>
+```
