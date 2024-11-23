@@ -1,6 +1,12 @@
 import { model, Schema } from 'mongoose'
 
 const orderSchema = new Schema({
+  // Reference to Customer schema
+  customerName: {
+    type: Schema.Types.ObjectId,
+    ref: 'Customer',
+    required: true,
+  },
   email: {
     type: String,
     required: [true, 'Please provide your email'],
@@ -13,10 +19,12 @@ const orderSchema = new Schema({
     },
     immutable: true,
   },
+  addreess: { type: String, required: true },
   product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
   // Reference to Product schema
   quantity: { type: Number, required: true },
   totalPrice: { type: Number, required: true },
+  date: { type: Date, default: Date.now },
 })
 
 const Order = model('Order', orderSchema)
