@@ -1,10 +1,31 @@
 import Customer from './customer.model'
 import { ICustomer } from './customer.interface'
+import { get } from 'mongoose'
 
 const createCustomer = async (customer: ICustomer) => {
   try {
     const result = await Customer.create(customer)
     return result
+  } catch (error) {
+    throw new Error((error as Error).message)
+  }
+}
+const getCustomers = async () => {
+  try {
+    const customers = await Customer.find()
+    return customers
+  } catch (error) {
+    throw new Error((error as Error).message)
+  }
+}
+
+const getSingleCustomer = async (customerId: string) => {
+  try {
+    const customer = await Customer.findById(customerId) // Find the customer by ID
+    if (!customer) {
+      throw new Error('Customer not found')
+    }
+    return customer // Return the customer
   } catch (error) {
     throw new Error((error as Error).message)
   }
@@ -47,5 +68,7 @@ const getCustomerOrders = async (customerId: string) => {
 
 export default {
   createCustomer,
+  getCustomers,
+  getSingleCustomer,
   getCustomerOrders,
 }

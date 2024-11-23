@@ -2,7 +2,7 @@ import { model, Schema } from 'mongoose'
 
 const orderSchema = new Schema({
   // Reference to Customer schema
-  customerName: {
+  customer: {
     type: Schema.Types.ObjectId,
     ref: 'Customer',
     required: true,

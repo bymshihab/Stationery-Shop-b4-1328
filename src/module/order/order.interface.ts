@@ -3,4 +3,5 @@ export interface IOrder {
   product: string
   quantity: number
   totalPrice: number
+  date?: Date
 }
