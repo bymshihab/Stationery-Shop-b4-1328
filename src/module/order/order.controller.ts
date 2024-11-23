@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import orderService from './order.service'
+import { handleValidationError } from '../../utils/errorHandler'
 const createOrder = async (req: Request, res: Response) => {
   try {
     const payload = req.body
@@ -9,11 +10,11 @@ const createOrder = async (req: Request, res: Response) => {
       message: 'Order created successfully',
       data: result,
     })
-  } catch (err) {
-    res.json({
-      status: false,
-      message: (err as Error).message || 'Internal Server Error',
-    })
+  } catch (err: any) {
+    // Use the custom validation error handler
+    const errorResponse = handleValidationError(err)
+    // Return the error response to the client
+    res.status(errorResponse.statusCode).json(errorResponse)
   }
 }
 const getOrder = async (req: Request, res: Response) => {
