@@ -23,13 +23,14 @@ const createProduct = async (req: Request, res: Response) => {
   }
 }
 
-//handelling the request and response for fetching the products
+//handelling the request and response for fetching the products with searchTerm
 const getProduct = async (req: Request, res: Response) => {
   try {
-    const result = await productService.getProduct()
+    const searchTerm = req.query.searchTerm as string // Extract searchTerm from query params
+    const result = await productService.getProduct(searchTerm)
     res.json({
       status: true,
-      message: 'Product fetched successfully',
+      message: 'Products fetched successfully',
       data: result,
     })
   } catch (err) {
