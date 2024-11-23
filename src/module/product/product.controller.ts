@@ -1,35 +1,40 @@
+import { handleValidationError } from '../../utils/errorHandler'
 import productService from './product.service'
 import { Request, Response } from 'express'
 
 //handelling the request and response for creating a new product
 const createProduct = async (req: Request, res: Response) => {
   try {
-    //getting the payload from the request
+    // Getting the payload from the request
     const payload = req.body
-    //calling the service function
+
+    // Calling the service function to create the product
     const result = await productService.createProduct(payload)
-    //sending response back to the client
+
+    // Sending response back to the client
     res.json({
       status: true,
       message: 'Product created successfully',
-      data: result,
+      data: result, // The newly created product object
     })
-  } catch (err) {
-    console.log(err)
-    res.json({
-      status: false,
-      message: 'Internal Server Error',
-    })
+  } catch (err: any) {
+    console.error(err)
+
+    // Use the custom validation error handler
+    const errorResponse = handleValidationError(err)
+    // Return the error response to the client
+    res.status(errorResponse.statusCode).json(errorResponse)
   }
 }
 
-//handelling the request and response for fetching the products
+//handelling the request and response for fetching the products with searchTerm
 const getProduct = async (req: Request, res: Response) => {
   try {
-    const result = await productService.getProduct()
+    const searchTerm = req.query.searchTerm as string // Extract searchTerm from query params
+    const result = await productService.getProduct(searchTerm)
     res.json({
       status: true,
-      message: 'Product fetched successfully',
+      message: 'Products fetched successfully',
       data: result,
     })
   } catch (err) {

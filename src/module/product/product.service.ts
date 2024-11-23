@@ -8,11 +8,19 @@ const createProduct = async (product: IProduct): Promise<IProduct> => {
 }
 
 //fetching all the products
-const getProduct = async (): Promise<IProduct[]> => {
-  const result = await Product.find()
-  return result
-}
+const getProduct = async (searchTerm?: string) => {
+  const filter: Record<string, any> = {}
 
+  // If searchTerm is provided, create a filter
+  if (searchTerm) {
+    const regex = new RegExp(searchTerm, 'i') // Case-insensitive regex
+    filter.$or = [{ category: regex }, { name: regex }, { brand: regex }]
+  }
+
+  // Fetch products from the database
+  const products = await Product.find(filter)
+  return products
+}
 //fetching a single product
 const getSingleProduct = async (id: string) => {
   const result = await Product.findById(id)
